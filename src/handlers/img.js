@@ -18,6 +18,6 @@ export default async (req) => {
     return {
         statusCode: 200,
         headers: filterHeaders(headers, 604800),
-        body: data
+        body: data.toString()
     }
 }
