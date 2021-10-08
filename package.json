@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "npm-pack-zip": "^1.2.9"
+  }
+}
