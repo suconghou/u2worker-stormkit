@@ -3,6 +3,7 @@ import { get, set } from '../utils/util'
 import videoParser from '../libs/videoparser'
 
 export default async req => {
+    const start = Date.now()
     const matches = req.path.match(/\/video\/([\w\-]{6,12})\/(\d{1,3})\/(\d+-\d+)\.ts/)
     const vid = matches[1]
     const itag = matches[2]
@@ -13,11 +14,10 @@ export default async req => {
         const { data, headers } = await fetch(target)
         return {
             statusCode: 200,
-            headers: filterHeaders(headers, 864000),
+            headers: filterHeaders(headers, `888${Date.now() - start}`),
             body: data,
         }
     }
-    const start = +new Date()
     try {
         cacheItem = await videoURLParse(vid, itag)
     } catch (e) {
@@ -36,10 +36,11 @@ export default async req => {
     }
     set(cacheKey, cacheItem)
     const target = `${cacheItem.url}&range=${matches[3]}`
+    const parsetime = Date.now() - start
     const { data, headers } = await fetch(target)
     return {
         statusCode: 200,
-        headers: filterHeaders(headers, `999${(+new Date() - start)}`),
+        headers: filterHeaders(headers, `${parsetime}99${Date.now() - start}`),
         body: data,
     }
 }

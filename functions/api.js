@@ -179,6 +179,7 @@ const imageMap = {
 };
 
 var img = async (req) => {
+    const start = Date.now();
     const matches = req.path.match(/\/video\/([\w\-]{6,12})\.(jpg|webp)/);
     const vid = matches[1];
     const ext = matches[2];
@@ -190,7 +191,7 @@ var img = async (req) => {
     const { headers, data } = await fetch(target, head);
     return {
         statusCode: 200,
-        headers: filterHeaders(headers, 604800),
+        headers: filterHeaders(headers, `999${Date.now() - start}`),
         body: data
     }
 };
@@ -575,6 +576,7 @@ class index extends parser {
 }
 
 var video = async req => {
+    const start = Date.now();
     const matches = req.path.match(/\/video\/([\w\-]{6,12})\/(\d{1,3})\/(\d+-\d+)\.ts/);
     const vid = matches[1];
     const itag = matches[2];
@@ -585,11 +587,10 @@ var video = async req => {
         const { data, headers } = await fetch(target);
         return {
             statusCode: 200,
-            headers: filterHeaders(headers, 864000),
+            headers: filterHeaders(headers, `888${Date.now() - start}`),
             body: data,
         }
     }
-    const start = +new Date();
     try {
         cacheItem = await videoURLParse(vid, itag);
     } catch (e) {
@@ -608,10 +609,11 @@ var video = async req => {
     }
     set(cacheKey, cacheItem);
     const target = `${cacheItem.url}&range=${matches[3]}`;
+    const parsetime = Date.now() - start;
     const { data, headers } = await fetch(target);
     return {
         statusCode: 200,
-        headers: filterHeaders(headers, `999${(+new Date() - start)}`),
+        headers: filterHeaders(headers, `${parsetime}99${Date.now() - start}`),
         body: data,
     }
 };

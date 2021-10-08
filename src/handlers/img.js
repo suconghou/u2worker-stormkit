@@ -6,6 +6,7 @@ const imageMap = {
 }
 
 export default async (req) => {
+    const start = Date.now()
     const matches = req.path.match(/\/video\/([\w\-]{6,12})\.(jpg|webp)/)
     const vid = matches[1]
     const ext = matches[2]
@@ -17,7 +18,7 @@ export default async (req) => {
     const { headers, data } = await fetch(target, head)
     return {
         statusCode: 200,
-        headers: filterHeaders(headers, 604800),
+        headers: filterHeaders(headers, `999${Date.now() - start}`),
         body: data
     }
 }
