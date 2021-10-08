@@ -1,4 +1,12 @@
 
+## u2worker-stormkit
+
+https://github.com/suconghou/u2worker
+
+https://github.com/suconghou/u2worker-deno
+
+https://github.com/suconghou/netlifyworker
+
 
 req 
 
@@ -20,4 +28,29 @@ res
 res.status(statusCode);
 res.setHeader(k, v);
 res.send(body);
+```
+
+### 部署
+
+本地 `make build`
+
+控制台开启`serverless`
+
+`Serverless entry file`
+
+```
+functions/api.js
+```
+
+`Public folder`
+
+```
+publish
+```
+
+
+`Build command`
+
+```
+pwd && ls -lha && sed -i 's/typeof.*body.*object.*stringify.*body.*://g' __sk__server.utils.js && cat __sk__server.utils.js
 ```
