@@ -7,7 +7,7 @@ req
 ```
 {
     method:'string',
-    getHeader(name),
+    headers:{},
     path:'pathname',
 }
 ```

@@ -11,7 +11,7 @@ const Delete = Method('delete')
 const Head = Method('head')
 const Options = Method('options')
 
-const Header = (header, val) => req => req.getHeader(header) === val
+const Header = (header, val) => req => req.headers[header] === val
 const Host = host => Header('host', host.toLowerCase())
 const Referrer = host => Header('referrer', host.toLowerCase())
 
